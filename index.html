@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OptiKube</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">OptiKube</h1>
+        <h2>Cluster Summary</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Namespace</th>
+                    <th>CPU (Req/Lim)</th>
+                    <th>MEM (Req/Lim)</th>
+                    <th>Efficiency (CPU/MEM)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{range .ClusterSummary}}
+            <tr>
+                <td>{{.Namespace}}</td>
+                <td>{{.TotalCPURequest}}/{{.TotalCPULimit}}</td>
+                <td>{{.TotalMemoryRequest}}/{{.TotalMemoryLimit}}</td>
+                <td>{{.EfficiencyCPU}}/{{.EfficiencyMemory}}</td>
+            </tr>
+            {{end}}
+            <tr>
+                <th>Total</th>
+                <th>{{.ClusterData.TotalCPURequest}}/{{.ClusterData.TotalCPULimit}}</th>
+                <th>{{.ClusterData.TotalMemoryRequest}}/{{.ClusterData.TotalMemoryLimit}}</th>
+                <th>{{.ClusterData.EfficiencyCPU}}/{{.ClusterData.EfficiencyMemory}}</th>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>Namespace Details</h2>
+        {{range .NamespaceData}}
+        <h3>{{.Namespace}}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pod Name</th>
+                    <th>CPU (Req/Lim)</th>
+                    <th>MEM (Req/Lim)</th>
+                    <th>Efficiency (CPU/MEM)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{range .Pods}}
+            <tr>
+                <td>{{.Name}}</td>
+                <td>{{.CPURequest}}/{{.CPULimit}}</td>
+                <td>{{.MemoryRequest}}/{{.MemoryLimit}}</td>
+                <td>{{.EfficiencyCPU}}/{{.EfficiencyMemory}}</td>
+            </tr>
+            {{end}}
+            <tr>
+                <th>Total</th>
+                <th>{{.TotalCPURequest}}/{{.TotalCPULimit}}</th>
+                <th>{{.TotalMemoryRequest}}/{{.TotalMemoryLimit}}</th>
+                <th>{{.EfficiencyCPU}}/{{.EfficiencyMemory}}</th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        {{end}}
+    </div>
+</body>
+</html>
